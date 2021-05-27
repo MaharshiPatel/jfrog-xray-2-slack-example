@@ -36,24 +36,23 @@ var routes = function(app) {
   //
   app.post("/xray/api", function(req, res) {
     let payload = req.body;
-    console.log(req);
+    console.log(payload);
 
     let totalIssues = payload.issues.length;
 
     // send each component to Slack
     let tmpStr =
-      "🔔 Policy:" +
-      payload.policy_name +
-      " \nWatch: " +
-      payload.watch_name +
-      " \nCreated: " +
-      payload.created +
-      " \nNumber Of Issues: " +
-      payload.issues.length +
-      "\n ℹ️ Below is the first issue:";
+      `🔔 
+      Policy: ${payload.policy_name} 
+      Watch: ${payload.watch_name}
+      Created: ${payload.created}
+      Number Of Issues: ${payload.issues.length}
+      ℹ️ Below is the first issue:`;
 
     // let's see what are we going to send to Slack
-    console.log(tmpStr + " --> sending to Slack ");
+    console.log(`${tmpStr} --> sending to Slack`);
+
+    console.log(`first - ${payload.issues[0]}`)
 
     // Build a nice msg
     const xrayNotification = {
