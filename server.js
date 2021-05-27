@@ -10,21 +10,22 @@
 // port to listen to for requests. In this case, port 3000.
 //
 const request = require("request");
-var express = require("express");
-var bodyParser = require("body-parser");
+const express = require("express");
+const bodyParser = require("body-parser");
 
-var app = express();
-
-// In case we get a 'big' payload from Xray
-app.use(bodyParser.json({ limit: "5mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
+let app = express();
 
 // put all the routes in place
-var routes = require("./routes.js")(app);
+let routes = require("./routes.js")(app);
+
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
 //
 // Start the (API)
 //
-var server = app.listen(3000, function() {
-  console.log("🛹 Listening on port %s", server.address().port);
+let server = app.listen(3300, function() {
+  console.log(`Listening on port ${server.address().port}`);
 });
