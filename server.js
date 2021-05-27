@@ -15,17 +15,19 @@ const bodyParser = require("body-parser");
 
 let app = express();
 
-// put all the routes in place
-let routes = require("./routes.js")(app);
-
-app.use(express.json());
+app.use(express.json({
+  extended: true
+}));
 app.use(express.urlencoded({
   extended: true
 }));
 
+// put all the routes in place
+let routes = require("./routes.js")(app);
+
 //
 // Start the (API)
 //
-let server = app.listen(3300, function() {
-  console.log(`Listening on port ${server.address().port}`);
+let server = app.listen(3000, function() {
+  console.log(`Listening on port - ${server.address().port} `);
 });
