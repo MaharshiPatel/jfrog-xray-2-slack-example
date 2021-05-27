@@ -36,7 +36,8 @@ var routes = function(app) {
   //
   app.post("/xray/api", function(req, res) {
     let payload = req.body;
-    console.log(payload);
+    console.log(req);
+
     let totalIssues = payload.issues.length;
 
     // send each component to Slack
