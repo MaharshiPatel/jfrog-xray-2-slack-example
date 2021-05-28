@@ -27,13 +27,23 @@ var routes = function(app) {
     let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
     let issues = payload.issues;
     let totalIssues = issues.length;
+    let assetType, asset, assetName, buildNumber;
+    if(totalIssues > 0) {
+      assetType = issues[0].impacted_artifacts[0].pkg_type;
+      asset = issues[0].impacted_artifacts[0].display_name;
+      assetName = assetName.split(":")[0];
+      buildNumber = assetName.split(":")[1];
+    }
+    console.log(`assetType - ${assetType}`);
 
     // send each component to Slack
     let tmpStr = `🔔 Number Of Alert : ${payload.issues.length}
-     Created : ${payload.created}`;
+    Watch: ${JSON.stringify(payload.watch_name)}
+    Policy: ${payload.policy_name}
+    Created : ${payload.created}`;
 
     // let's see what are we going to send to Slack
-    console.log(`${tmpStr} --> sending to Slack`);
+    // console.log(`${tmpStr} --> sending to Slack`);
 
     console.log(`ℹ️ first - ${JSON.stringify(payload.issues)}`)
 
@@ -44,11 +54,24 @@ var routes = function(app) {
       username: "Xray notifier",
       text: tmpStr, // text
       icon_emoji: ":bangbang:",
-      attachments: [{
-        "title": "Issues",
-        "title_link": `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`,
-        "text": `Policy: ${payload.policy_name} | Watch: ${JSON.stringify(payload.watch_name)}`
-      }]
+      attachments: [
+        {
+          color: "#eed140",
+          fields: [
+            {
+              title: "Type",
+              value: `${assetType}`,
+              short: true
+            },
+            {
+              title: "Build",
+              value: `${asset}`,
+              url: `${process.env.JPD_INSTANCE_URL}/ui/builds/${assetName}/${buildNumber}`,
+              short: true
+            }
+          ]
+        }
+      ]
     };
 
     sendSlackMessage(xrayNotification);
