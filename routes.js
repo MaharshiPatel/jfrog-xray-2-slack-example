@@ -9,6 +9,7 @@
 const fs = require("fs");
 const https = require("https");
 const dotenv = require("dotenv");
+import terminalLink from 'terminal-link';
 
 // Loads environment variables from the .env file into process.env
 dotenv.config();
@@ -26,13 +27,13 @@ var routes = function(app) {
     console.log(payload);
     console.log(req.protocol);
     console.log(req.get('host'));
-    let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
+    const link = terminalLink(`${payload.watch_name}`, `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`);
 
     let totalIssues = payload.issues.length;
 
     // send each component to Slack
     let tmpStr = `🔔 Policy: ${payload.policy_name} 
-        Watch: ${JSON.stringify(payload.watch_name).link(watchLink)} 
+        Watch:  ${link}, 
         Created: ${payload.created} 
         Top Severity: ${payload.top_severity}
         Number Of Issues: ${payload.issues.length}`;
