@@ -35,7 +35,7 @@ var routes = function(app) {
       buildNumber = asset.split(":")[1];
       titleLink = (assetType == "Build") ? 
         `${process.env.JPD_INSTANCE_URL}/ui/builds/${assetName}/${buildNumber}` : 
-        `${process.env.JPD_INSTANCE_URL}/ui/packages/${assetType}://${assetName}/${buildNumber}?activeTab=xrayData`
+        `${process.env.JPD_INSTANCE_URL}/ui/packages?name=${assetName}&type=packages`
     }
 
     console.log(`assetType : ${assetType} , titleLink : ${titleLink}`)
