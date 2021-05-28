@@ -27,15 +27,15 @@ var routes = function(app) {
     let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
     let issues = payload.issues;
     let totalIssues = issues.length;
-    let assetType, asset, assetName, buildNumber, titleLink;
+    let assetType, asset, assetName, versionNumber, titleLink;
     if(totalIssues > 0) {
       assetType = issues[0].impacted_artifacts[0].pkg_type;
       asset = issues[0].impacted_artifacts[0].display_name;
       assetName = asset.split(":")[0];
-      buildNumber = asset.split(":")[1];
+      versionNumber = asset.split(":")[1];
       titleLink = (assetType == "Build") ? 
-        `${process.env.JPD_INSTANCE_URL}/ui/builds/${assetName}/${buildNumber}` : 
-        `${process.env.JPD_INSTANCE_URL}/ui/packages?name=${assetName}&type=packages`
+        `${process.env.JPD_INSTANCE_URL}/ui/builds/${assetName}/${versionNumber}` : 
+        `${process.env.JPD_INSTANCE_URL}/ui/packages?name=${assetName}&type=packages&version=${versionNumber}`
     }
 
     console.log(`assetType : ${assetType} , titleLink : ${titleLink}`)
