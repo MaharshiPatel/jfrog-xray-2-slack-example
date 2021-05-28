@@ -9,7 +9,6 @@
 const fs = require("fs");
 const https = require("https");
 const dotenv = require("dotenv");
-const terminalLink = require("terminal-link");
 
 // Loads environment variables from the .env file into process.env
 dotenv.config();
@@ -25,61 +24,31 @@ var routes = function(app) {
   app.post("/xray/api", function(req, res) {
     let payload = req.body;
     console.log(payload);
-    console.log(req.protocol);
-    console.log(req.get('host'));
-    const link = terminalLink(`${payload.watch_name}`, `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`);
-
-    let totalIssues = payload.issues.length;
+    let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
+    let issues = payload.issues;
+    let totalIssues = issues.length;
 
     // send each component to Slack
-    let tmpStr = `🔔 Policy: ${payload.policy_name} 
-        Watch:  ${link}, 
-        Created: ${payload.created} 
-        Top Severity: ${payload.top_severity}
-        Number Of Issues: ${payload.issues.length}`;
+    let tmpStr = `🔔 Number Of Alert : ${payload.issues.length}
+     Created : ${payload.created}`;
 
     // let's see what are we going to send to Slack
     console.log(`${tmpStr} --> sending to Slack`);
 
-    console.log(`ℹ️ first - ${JSON.stringify(payload.issues[0])}`)
+    console.log(`ℹ️ first - ${JSON.stringify(payload.issues)}`)
+
+    // issues.forEach(ele => {})
 
     // Build a nice msg
     const xrayNotification = {
       username: "Xray notifier",
       text: tmpStr, // text
       icon_emoji: ":bangbang:",
-      attachments: [
-        {
-          color: "#eed140",
-          // You can add more fields as the data from Xray contains more information
-          fields: [
-            {
-              title: "Type",
-              value: payload.issues[0].type,
-              short: true
-            },
-            {
-              title: "Severity",
-              value: payload.issues[0].severity,
-              short: true
-            },
-            {
-              title: "Created",
-              value: payload.issues[0].created,
-              short: true
-            },
-            {
-              title: "Provider",
-              value: payload.issues[0].provider,
-              short: true
-            },
-            {
-              title: "Summary",
-              value: payload.issues[0].summary
-            }
-          ]
-        }
-      ]
+      attachments: [{
+        "title": "Issues",
+        "title_link": `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`,
+        "text": `Policy: ${payload.policy_name} | Watch: ${JSON.stringify(payload.watch_name)}`
+      }]
     };
 
     sendSlackMessage(xrayNotification);
@@ -97,7 +66,6 @@ var routes = function(app) {
  */
 function sendSlackMessage(messageBody) {
   try {
-    //console.log("=== " + messageBody);
     messageBody = JSON.stringify(messageBody);
   } catch (e) {
     console.log("Got ERR with sending msg to slack ");
