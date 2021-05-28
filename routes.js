@@ -9,7 +9,7 @@
 const fs = require("fs");
 const https = require("https");
 const dotenv = require("dotenv");
-import terminalLink from 'terminal-link';
+const terminalLink = require("terminal-link");
 
 // Loads environment variables from the .env file into process.env
 dotenv.config();
