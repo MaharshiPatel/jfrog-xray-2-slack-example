@@ -38,7 +38,6 @@ var routes = function(app) {
 
     // send each component to Slack
     let tmpStr = `🔔 Number Of Alert : ${payload.issues.length}
-        Build: ${asset}
         Created : ${payload.created}`;
 
     // let's see what are we going to send to Slack
@@ -57,7 +56,7 @@ var routes = function(app) {
         {
           color: "#eed140",
           "title": `Build: ${asset}`,
-          "title_link": `${process.env.JPD_INSTANCE_URL}/ui/builds/${assetName}/${buildNumber}`,
+          "title_link": `${process.env.JPD_INSTANCE_URL}ui/builds/${assetName}/${buildNumber}`,
           fields: [
             {
               title: "Watch",
@@ -67,6 +66,11 @@ var routes = function(app) {
             {
               title: "Policy",
               value: `${payload.policy_name}`,
+              short: true
+            },
+            {
+              title: "Top Severity",
+              value: `${payload.top_severity}`,
               short: true
             }
           ]
