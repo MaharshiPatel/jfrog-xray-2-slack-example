@@ -24,13 +24,17 @@ var routes = function(app) {
   app.post("/xray/api", function(req, res) {
     let payload = req.body;
     console.log(payload);
+    console.log(req.protocol);
+    console.log(req.get('host'));
+    let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
 
     let totalIssues = payload.issues.length;
 
     // send each component to Slack
     let tmpStr = `🔔 Policy: ${payload.policy_name} 
-        Watch: ${payload.watch_name} 
-        Created: ${JSON.stringify(payload.created).split('.')[0]} 
+        Watch: ${JSON.stringify(payload.watch_name).link(watchLink)} 
+        Created: ${payload.created} 
+        Top Severity: ${payload.top_severity}
         Number Of Issues: ${payload.issues.length}`;
 
     // let's see what are we going to send to Slack
