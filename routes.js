@@ -18,6 +18,10 @@ dotenv.config();
 //
 var routes = function(app) {
 
+  app.get('/healthcheck', function (req, res) {
+    res.send('ok!')
+  })
+
   //
   // The API end-point that get the notifications from Xray and send them as messages to Slack
   //

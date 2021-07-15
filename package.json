@@ -1,5 +1,5 @@
 {
-  "name": "xray-webhook-2-slack-example",
+  "name": "xray-slack-webhook-integration",
   "version": "0.1.2",
   "description": "Xray Sending Messages to Slack | More details: @greenido",
   "main": "server.js",
@@ -11,6 +11,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "https": "^1.0.0",
+    "morgan": "^1.10.0",
     "request": "^2.88.2"
   },
   "keywords": [
@@ -18,7 +19,8 @@
     "jfrog-xray",
     "express",
     "api",
-    "security"
+    "security",
+    "slack"
   ],
   "license": "MIT"
 }
