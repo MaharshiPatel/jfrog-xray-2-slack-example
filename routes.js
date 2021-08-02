@@ -9,12 +9,9 @@ let routes = function(app) {
 
   app.post("/xray/api", function(req, res) {
     let payload = req.body
-    console.log(payload)
-    logger.info(JSON.stringify(payload))
-    // let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
-
-
-
+    // console.log(payload)
+    logger.info(JSON.stringify(req.url))
+    let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
     let issues = payload.issues
     let totalIssues = issues.length
     let assetType, asset, assetName, versionNumber, titleLink
@@ -37,7 +34,7 @@ let routes = function(app) {
 
     // Build a nice msg
     const xrayNotification = {
-      username: "Xray notifier",
+      username: "JFrog Xray",
       text: tmpStr, // text
       icon_emoji: ":bangbang:",
       attachments: [
@@ -62,6 +59,25 @@ let routes = function(app) {
               short: true
             }
           ]
+        }
+      ],
+      actions: [ // Slack supports many kind of different types, we'll use buttons here
+        {
+          type: "button",
+          text: "Show order", // text on the button 
+          url: "http://example.com" // url the button will take the user if clicked
+        },
+        {
+          type: "button",
+          text: "Handle delivery",
+          "style": "primary", // you can have buttons styled either primary or danger
+          url: "http://example.com"
+        },
+        {
+          type: "button",
+          text: "Cancel order",
+          "style": "danger",
+          url: "http://example.com/order/1/cancel"
         }
       ]
     }
