@@ -7,8 +7,6 @@ const PORT = 3300
 dotenv.config()
 
 let app = express()
-let routes = require("./routes.js")(app)
-
 app.use(express.json({
   limit: '100mb',
   extended: true
@@ -17,6 +15,8 @@ app.use(express.urlencoded({
   limit: '100mb',
   extended: true
 }))
+
+let routes = require("./routes.js")(app)
 
 app.listen(PORT, () => {
   logger.info(`Listening on port - ${PORT}`)
