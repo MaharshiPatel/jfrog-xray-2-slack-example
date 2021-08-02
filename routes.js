@@ -10,7 +10,7 @@ let routes = function(app) {
   app.post("/xray/api", function(req, res) {
     let payload = req.body
     // console.log(payload)
-    logger.info(JSON.stringify(req.url))
+    logger.info(JSON.stringify(req))
     let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
     let issues = payload.issues
     let totalIssues = issues.length
@@ -66,18 +66,6 @@ let routes = function(app) {
           type: "button",
           text: "Show order", // text on the button 
           url: "http://example.com" // url the button will take the user if clicked
-        },
-        {
-          type: "button",
-          text: "Handle delivery",
-          "style": "primary", // you can have buttons styled either primary or danger
-          url: "http://example.com"
-        },
-        {
-          type: "button",
-          text: "Cancel order",
-          "style": "danger",
-          url: "http://example.com/order/1/cancel"
         }
       ]
     }
