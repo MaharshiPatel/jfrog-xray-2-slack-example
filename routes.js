@@ -29,8 +29,7 @@ let routes = function(app) {
     logger.info(`assetType : ${assetType} , titleLink : ${titleLink}`)
     
     // send each component to Slack
-    let tmpStr = `🔔 Number Of Alert - ${payload.issues.length}
-        Created : ${payload.created}`
+    let tmpStr = `🔔 Number Of Alert - ${payload.issues.length}`
 
     // Build a nice msg
     const xrayNotification = {
@@ -56,6 +55,11 @@ let routes = function(app) {
             {
               title: "Top Severity",
               value: `${payload.top_severity}`,
+              short: true
+            },
+            {
+              title: "Created",
+              value: `${payload.created}`,
               short: true
             }
           ]
