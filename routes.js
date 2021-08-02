@@ -10,8 +10,7 @@ let routes = function(app) {
 
   app.post("/xray/api", function(req, res) {
     let payload = req.body
-    // console.log(payload)
-    logger.info(CircularJSON.stringify(req))
+    // logger.info(CircularJSON.stringify(req))
     let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
     let issues = payload.issues
     let totalIssues = issues.length
@@ -30,18 +29,18 @@ let routes = function(app) {
     logger.info(`assetType : ${assetType} , titleLink : ${titleLink}`)
     
     // send each component to Slack
-    let tmpStr = `🔔 Number Of Alert : ${payload.issues.length}
+    let tmpStr = `🔔 Number Of Alert - ${payload.issues.length}
         Created : ${payload.created}`
 
     // Build a nice msg
     const xrayNotification = {
       username: "JFrog Xray",
       text: tmpStr, // text
-      icon_emoji: ":bangbang:",
+      icon_emoji: ":boom:",
       attachments: [
         {
           color: "#eed140",
-          "title": `${assetType}: ${asset}`,
+          "title": `${assetType} - ${asset}`,
           "title_link": `${titleLink}`,
           fields: [
             {
@@ -60,13 +59,6 @@ let routes = function(app) {
               short: true
             }
           ]
-        }
-      ],
-      actions: [ // Slack supports many kind of different types, we'll use buttons here
-        {
-          type: "button",
-          text: "Show order", // text on the button 
-          url: "http://example.com" // url the button will take the user if clicked
         }
       ]
     }
