@@ -12,8 +12,8 @@ let routes = function(app) {
   //
   app.post("/xray/api", function(req, res) {
     let payload = req.body
-    logger.info(payload.watch_name)
-    let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
+    logger.info(payload)
+    // let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
     let issues = payload.issues
     let totalIssues = issues.length
     let assetType, asset, assetName, versionNumber, titleLink

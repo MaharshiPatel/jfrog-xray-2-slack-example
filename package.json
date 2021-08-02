@@ -4,7 +4,7 @@
   "description": "Xray Sending Messages to Slack | More details: @greenido",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "npm install && node server.js"
   },
   "engines": {
     "node": "15.x"
