@@ -1,5 +1,4 @@
-let log4js = require("log4js")
-let logger = log4js.getLogger()
+const logger = require("./common/logger")
 let routes = function(app) {
 
   app.get('/healthcheck', function (req, res) {
@@ -7,13 +6,14 @@ let routes = function(app) {
     res.send('ok!')
   })
 
-  //
-  // The API end-point that get the notifications from Xray and send them as messages to Slack
-  //
   app.post("/xray/api", function(req, res) {
     let payload = req.body
-    logger.info(payload)
+    console.log(payload)
+    logger.info(JSON.stringify(payload))
     // let watchLink = `${req.protocol}://${req.get('host')}/ui/watchesNew/edit/${payload.watch_name}`
+
+
+
     let issues = payload.issues
     let totalIssues = issues.length
     let assetType, asset, assetName, versionNumber, titleLink
