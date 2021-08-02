@@ -29,13 +29,13 @@ let routes = function(app) {
     logger.info(`assetType : ${assetType} , titleLink : ${titleLink}`)
     
     // send each component to Slack
-    let tmpStr = `🔔 Number Of Alert - ${payload.issues.length}`
+    let tmpStr = `Number Of Alert - ${payload.issues.length}`
 
     // Build a nice msg
     const xrayNotification = {
       username: "JFrog Xray",
       text: tmpStr, // text
-      icon_emoji: ":boom:",
+      icon_emoji: ":bell:",
       attachments: [
         {
           color: "#eed140",
